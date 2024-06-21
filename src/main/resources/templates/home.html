@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <!-- Latest Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel="stylesheet" th:href="@{/style.css}" />
+
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img class="logo" th:src="@{/logo.jpg}" alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Products</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart"><span class="badge text-bg-danger" th:text="${cartQty}"></span> Cart</a>
+                </li>
+
+                <li th:if="${user != null}" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${user.name}"></a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/my-orders">My Orders</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+
+                <li th:unless="${user != null}" class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li th:unless="${user != null}" class="nav-item">
+                    <a class="nav-link" href="/signup">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <h2 class="hero-left-text">Welcome to NoFrills</h2>
+            <p>Here you can buy grocery with cheap price</p>
+            <button class="theme-button btn btn-success">Shop Now</button>
+        </div>
+        <div class="col-md-8">
+
+            <img class="hero-right img-fluid" th:src="@{/shoping.jpg}" alt="grocery-shop">
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+<h1 class="text-center mt-5">Buy Your Desired Product</h1>
+
+
+<div class="container">
+
+    <div class="row">
+
+
+
+
+
+            <div class="card col-md-3" >
+                <img class="card-img-top" th:src="@{/product.jpg}" alt="grocery-shop">
+                <div class="card-body">
+                    <h5 class="card-title">Kraft Smooth Peanut Butter, 2kg</h5>
+                    <p class="card-text">$2.00 CAD</p>
+
+                    <form action="/add" method="post">
+                        <input type="hidden" name="item" value="Kraft Smooth Peanut Butter, 2kg">
+                        <input type="hidden" name="image" value="product.jpg">
+                        <input type="hidden" name="price" value="2.00">
+                        <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                    </form>
+
+
+                </div>
+            </div>
+
+            <div class="card col-md-3" >
+                <img class="card-img-top" th:src="@{/product1.jpg}" alt="grocery-shop">
+                <div class="card-body">
+                    <h5 class="card-title">Desi Fresh Mango</h5>
+                    <p class="card-text">$3.00 CAD</p>
+                    <form action="/add" method="post">
+                        <input type="hidden" name="item" value="Desi Fresh Mango">
+                        <input type="hidden" name="image" value="product1.jpg">
+                        <input type="hidden" name="price" value="3.00">
+                        <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="card col-md-3" >
+                <img class="card-img-top" th:src="@{/product2.jpg}" alt="grocery-shop">
+                <div class="card-body">
+                    <h5 class="card-title">CERELAC CERELAC Honey & Wheat With Milk</h5>
+                    <p class="card-text">$4.00 CAD</p>
+                    <form action="/add" method="post">
+                        <input type="hidden" name="item" value="CERELAC CERELAC Honey & Wheat With Milk">
+                        <input type="hidden" name="image" value="product2.jpg">
+                        <input type="hidden" name="price" value="4.00">
+                        <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="card col-md-3" >
+                <img class="card-img-top" th:src="@{/product3.jpg}" alt="grocery-shop">
+                <div class="card-body">
+                    <h5 class="card-title">Gerber Oat Baby Cereal</h5>
+                    <p class="card-text">$4.59 CAD</p>
+                    <form action="/add" method="post">
+                        <input type="hidden" name="item" value="Gerber Oat Baby Cereal">
+                        <input type="hidden" name="image" value="product2.jpg">
+                        <input type="hidden" name="price" value="4.59">
+                        <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+    </div>
+
+
+
+    <div class="row">
+
+
+
+
+
+        <div class="card col-md-3" >
+            <img class="card-img-top" th:src="@{/product4.jpg}" alt="grocery-shop">
+            <div class="card-body">
+                <h5 class="card-title">Botan Calrose Rice, 8 kg</h5>
+                <p class="card-text">$17.97 CAD</p>
+
+                <form action="/add" method="post">
+                    <input type="hidden" name="item" value="Botan Calrose Rice, 8 kg">
+                    <input type="hidden" name="image" value="product4.jpg">
+                    <input type="hidden" name="price" value="17.97">
+                    <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                </form>
+
+
+            </div>
+        </div>
+
+        <div class="card col-md-3" >
+            <img class="card-img-top" th:src="@{/product5.jpg}" alt="grocery-shop">
+            <div class="card-body">
+                <h5 class="card-title">Cherries, Jumbo, 1 Bag, 0.42 - 1.10 kg</h5>
+                <p class="card-text">$9.60 CAD</p>
+                <form action="/add" method="post">
+                    <input type="hidden" name="item" value="Cherries, Jumbo, 1 Bag, 0.42 - 1.10 kg">
+                    <input type="hidden" name="image" value="product5.jpg">
+                    <input type="hidden" name="price" value="9.60">
+                    <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="card col-md-3" >
+            <img class="card-img-top" th:src="@{/product6.jpg}" alt="grocery-shop">
+            <div class="card-body">
+                <h5 class="card-title">Royale Velour Toilet Paper, 12 Equal 24 Bathroom tissue rolls, 2-Ply, 142 Sheets a Roll</h5>
+                <p class="card-text">$8.97 CAD</p>
+                <form action="/add" method="post">
+                    <input type="hidden" name="item" value="Royale Velour Toilet Paper, 12 Equal 24 Bathroom tissue rolls, 2-Ply, 142 Sheets a Roll">
+                    <input type="hidden" name="image" value="product6.jpg">
+                    <input type="hidden" name="price" value="8.97">
+                    <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="card col-md-3" >
+            <img class="card-img-top" th:src="@{/product7.jpg}" alt="grocery-shop">
+            <div class="card-body">
+                <h5 class="card-title">Onion, Yellow, Your Fresh Market, 3 lb bag</h5>
+                <p class="card-text">$3.47 CAD</p>
+                <form action="/add" method="post">
+                    <input type="hidden" name="item" value="Onion, Yellow, Your Fresh Market, 3 lb bag">
+                    <input type="hidden" name="image" value="product7.jpg">
+                    <input type="hidden" name="price" value="3.47">
+                    <button class="common-theme-button btn btn-primary" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+<!-- Footer -->
+<footer class="footer-area text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Company Name</h5>
+                <p>
+                    Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet,
+                    consectetur adipisicing elit.
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Links</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="home.html" class="text-dark">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html" class="text-dark">About</a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="text-dark">Contact</a>
+                    </li>
+                    <li>
+                        <a href="products.html" class="text-dark">Products</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase mb-0">Contact</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#!" class="text-dark">Email: info@company.com</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Phone: +123 456 7890</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="text-dark">Address: 123 Street, City, Country</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="text-center p-3  text-white">
+        © 2024 Company Name. All rights reserved.
+    </div>
+</footer>
+
+<!-- Latest Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

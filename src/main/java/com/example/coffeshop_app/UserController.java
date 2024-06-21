@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class UserController {
 
@@ -21,8 +25,26 @@ public class UserController {
         this.userRepository = userRepository;
     }
     @GetMapping("/login")
-    public String index() {
+    public String index(HttpSession session, Model model) {
+
+        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("cartQty", cartItems.size());
+
+        double totalAmount = calculateTotal(cartItems);
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String formattedTotal = df.format(totalAmount);
+
+        model.addAttribute("total",formattedTotal);
+
+
         return "login";
+
+
+
     }
     @PostMapping("/login-verify")
     public String login(@RequestParam String email, @RequestParam String
@@ -38,6 +60,8 @@ public class UserController {
     }
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
+
+
         User user = (User) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);
@@ -54,7 +78,23 @@ public class UserController {
 
 
     @GetMapping("/signup")
-    public String addUserForm(Model model) {
+    public String addUserForm(HttpSession session,Model model) {
+
+
+        List<CartItem> cartItems = (List<CartItem>) session.getAttribute("cartItems");
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("cartQty", cartItems.size());
+
+        double totalAmount = calculateTotal(cartItems);
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String formattedTotal = df.format(totalAmount);
+
+        model.addAttribute("total",formattedTotal);
+
+
         model.addAttribute("user", new User());
         return "signup";
     }
@@ -86,6 +126,14 @@ public class UserController {
 
 
 
+    }
+
+    private double calculateTotal(List<CartItem> cartItems) {
+        double total = 0;
+        for (CartItem item : cartItems) {
+            total += item.getTotalAmount();
+        }
+        return total;
     }
 
 }
