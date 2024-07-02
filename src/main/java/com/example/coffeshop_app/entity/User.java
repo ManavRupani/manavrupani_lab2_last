@@ -1,6 +1,11 @@
-package com.example.coffeshop_app;
+package com.example.coffeshop_app.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "tbl_user")
 public class User {
@@ -10,9 +15,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-
-    @Transient
-    private String verifypassword;
+    private String type;
 
     public Long getId() {
         return id;
@@ -46,11 +49,12 @@ public class User {
         this.password = password;
     }
 
-    public String getVerifypassword() {
-        return verifypassword;
+    public String getType() {
+        return type;
     }
 
-    public void setVerifypassword(String verifypassword) {
-        this.verifypassword = verifypassword;
+    public void setType(String type) {
+        this.type = type;
     }
+    
 }
